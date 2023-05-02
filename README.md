@@ -1,18 +1,7 @@
-# Huffman_project
+# Compresor_Descompresor
+Proyecto de estructura del computador 2 Universidad del  Norte, acerca de realizar un código en py para comprimir y descomprimir archivos txt
 
-El codigo principal esta en el archivo huffman.py
-
-si corren el compresor no debe haber problema
-
-el descompresor es el que presenta problemas
-
-Problema:
-si se corren la comprimida y descomprimida por separado, el diccionario que es usado para codificar y decodificar los caracteres no es trasladado en el archivo comprimido.
-
-Solucion teorica:
-añadir la informacion del diccionario al comprimido y luego esa informacion descomprimirla.
-
-problema de la implementacion:
-como el comprimido es un archivo binario, debemos saber como comprimir el diccionario y su tamaño en el mismo binario para luego en el proceso de descompresion extraer el tamaño y los bytes del diccionario. si obtenemos el diccionario sin problemas, podemos usar la funcion de descompresion que esta en huffman.py 
-
-puche me recomendo usar el modulo pickle
+Para el correcto uso de este código lo podemos ejecutar en un Codespace, en este, las rutas de acceso a la carpeta archivos ya están preestablecidas,
+entonces simplemente ejecutando el compresor, descompresor y verificador respectivamente. Podemos comprimir un archivo, en este caso "LaBiblia.txt"
+en otro archivo llamado "comprimido.elmejorprofesor". Luego, este mismo archivo será usado para ser descomprimido en un archivo "descomprimido-elmejorprofesor.txt".
+Por ultimo, ejecutamos el verificador y este comprobará que los archivos "LaBiblia.txt" y "descomprimido-elmejorprofesor.txt" sean iguales.
