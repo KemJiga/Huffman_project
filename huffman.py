@@ -1,7 +1,7 @@
 import heapq
 import os
 import pickle
-
+ 
 """
 author: Bhrigu Srivastava
 website: https:bhrigu.me
@@ -128,21 +128,8 @@ class HuffmanCoding:
 			b_mapping = bytearray(pickle.dumps(self.reverse_mapping))
 			
 			combined_array = b"".join([b_mapping, b_map])
-			#combined_array = bytearray(b"".join([bytearray(75), combined_array]))
-			print(b_map)
-			print("b size: " + str(len(b_map)))
-			print(b_mapping)
 			print("dic size: " + str(len(b_mapping)))
-			print(combined_array)
-			print("combined size: " + str(len(combined_array)))
-
-			val = len(b_mapping)
-			val = bytearray(val.to_bytes(2, "big"))
-
-			combined_array = bytearray(b"".join([val, combined_array]))
-			print("\n")
-			print(print(combined_array))
-
+			
 			output.write(bytes(combined_array))
 
 		print("Compressed")
@@ -153,13 +140,13 @@ class HuffmanCoding:
 
 
 	def remove_padding(self, padded_encoded_text):
-		print(padded_encoded_text)
+		#print(padded_encoded_text)
 		padded_info = padded_encoded_text[:8]
 		extra_padding = int(padded_info, 2)
 
 		padded_encoded_text = padded_encoded_text[8:] 
 		encoded_text = padded_encoded_text[:-1*extra_padding]
-		print(encoded_text)
+		#print(encoded_text)
 		return encoded_text
 
 	def decode_text(self, encoded_text):
@@ -167,11 +154,11 @@ class HuffmanCoding:
 		current_code = ""
 		decoded_text = ""
 
-		print("\n" + encoded_text)
+		#print("\n" + encoded_text)
 		for bit in encoded_text:
 			current_code += bit
-			print("current code: " + current_code)
-			print("text: " + decoded_text)
+			#print("current code: " + current_code)
+			#print("text: " + decoded_text)
 			if(current_code in self.reverse_mapping):
 				character = self.reverse_mapping[current_code]
 				decoded_text += character
@@ -195,25 +182,18 @@ class HuffmanCoding:
 		with open(input_path, 'rb') as file, open(output_path, 'w') as output:
 			bit_string = ""
 
-			raw_content = self.get_raw_content(file)
-			
-			for i in range(3):
+			self.reverse_mapping = pickle.loads(file.read(701))
+			byte = file.read(1)
+			while byte:
+				byte = ord(byte)
+				bits = bin(byte)[2:].rjust(8, '0')
+				bit_string += bits
 				byte = file.read(1)
-				print(byte)
-			#while byte:
-				#byte = ord(byte)
-				#bits = bin(byte)[2:].rjust(8, '0')
-				#bit_string += bits
-				#byte = file.read(1)
 			
 			print(bit_string)
-			print("1")
-			#encoded_text = self.remove_padding(bit_string)
-			print("2")
-			#decompressed_text = self.decode_text(encoded_text)
-			print("3")
-			#output.write(decompressed_text)
-			print("4")
+			encoded_text = self.remove_padding(bit_string)
+			decompressed_text = self.decode_text(encoded_text)
+			output.write(decompressed_text)
 		print("Decompressed")
 		return output_path
 	
