@@ -4,9 +4,7 @@ def are_files_equal(file_path_1, file_path_2):
             if line1 != line2:
                 return False
         if file1.readline() != file2.readline():
-            print("line og: ", file1.readline())
-            print("\nline 2: ", file2.readline())
             return False
     return True
 
-print(are_files_equal("LaBiblia.txt", "LaBiblia_decompressed.txt"))
+print(are_files_equal("LaBiblia.txt", "descomprimiedo_elmejorprofesor.txt"))
