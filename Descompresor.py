@@ -1,7 +1,7 @@
 from huffman import HuffmanCoding
 import time
 
-path = "sample.bin"
+path = "LaBiblia.bin"
 
 h = HuffmanCoding(path)
 

@@ -182,7 +182,7 @@ class HuffmanCoding:
 		with open(input_path, 'rb') as file, open(output_path, 'w') as output:
 			bit_string = ""
 
-			self.reverse_mapping = pickle.loads(file.read(701))
+			self.reverse_mapping = pickle.loads(file.read(1753))
 			byte = file.read(1)
 			while byte:
 				byte = ord(byte)
