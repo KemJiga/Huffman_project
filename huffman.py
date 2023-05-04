@@ -1,5 +1,4 @@
 import heapq
-import os
 import pickle
  
 """
@@ -108,7 +107,6 @@ class HuffmanCoding:
 
 
 	def compress(self):
-		#filename, file_extension = os.path.splitext(self.path)
 		output_path = "comprimido.elmejorprofesor"
 
 		with open(self.path, 'r+') as file, open(output_path, 'wb') as output:
@@ -125,14 +123,12 @@ class HuffmanCoding:
 
 			b_map = self.get_byte_array(padded_encoded_text)
 
-			b_mapping = bytearray(pickle.dumps(self.reverse_mapping))
+			dic_file = open('diccionario.bin', 'wb')
+			pickle.dump(obj=self.reverse_mapping, file=dic_file)
+			dic_file.close()
 			
-			combined_array = b"".join([b_mapping, b_map])
-			print("dic size: " + str(len(b_mapping)))
-			
-			output.write(bytes(combined_array))
+			output.write(bytes(b_map))
 
-		print("Compressed")
 		return output_path
 
 
@@ -150,7 +146,7 @@ class HuffmanCoding:
 		return encoded_text
 
 	def decode_text(self, encoded_text):
-		print("reverse mapping:\n", self.reverse_mapping)
+		#print("reverse mapping:\n", self.reverse_mapping)
 		current_code = ""
 		decoded_text = ""
 
@@ -161,28 +157,22 @@ class HuffmanCoding:
 			#print("text: " + decoded_text)
 			if(current_code in self.reverse_mapping):
 				character = self.reverse_mapping[current_code]
-				decoded_text += character
+				decoded_text += str(character)
 				current_code = ""
 
 		return decoded_text
 
-	def get_raw_content(self, file):
-		with open("sample.bin", 'rb') as file:
-			for line in file:
-				raw_line = line
-		file.close()
-
-		arr_bytes = raw_line[2:len(raw_line)-1].split("\\")
-		print(len(arr_bytes))
-
 	def decompress(self, input_path):
 		#filename, file_extension = os.path.splitext(self.path)
-		output_path = "descomprimiedo_elmejorprofesor.txt"
+		output_path = "descomprimido_elmejorprofesor.txt"
+
+		dic_file = open('diccionario.bin', 'rb')
+		self.reverse_mapping = pickle.load(file=dic_file)
+		dic_file.close()
 
 		with open(input_path, 'rb') as file, open(output_path, 'w') as output:
 			bit_string = ""
 
-			self.reverse_mapping = pickle.loads(file.read(1753))
 			byte = file.read(1)
 			while byte:
 				byte = ord(byte)
@@ -190,11 +180,10 @@ class HuffmanCoding:
 				bit_string += bits
 				byte = file.read(1)
 			
-			print(bit_string)
+			#print(bit_string)
 			encoded_text = self.remove_padding(bit_string)
 			decompressed_text = self.decode_text(encoded_text)
 			output.write(decompressed_text)
-		print("Decompressed")
 		return output_path
 	
 

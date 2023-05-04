@@ -1,15 +1,17 @@
+import sys
 
-###############################################################################################
-##                                  Verificador Mágico                                       ##
-###############################################################################################
+def are_files_equal(file_path_1, file_path_2):
+    with open(file_path_1, 'r') as file1, open(file_path_2, 'r') as file2:
+        for line1, line2 in zip(file1, file2):
+            if line1 != line2:
+                return False
+        if file1.readline() != file2.readline():
+            return False
+    return True
 
-Lines = []
-for line in open(r"/workspaces/Compresor_Descompresor/Archivos/LaBiblia.txt", 'r', encoding="latin-1").readlines():
-  Lines.append(line)
-Lines2 = []
-for line in open(r"/workspaces/Compresor_Descompresor/Archivos/descomprimido-elmejorprofesor.txt", 'r', encoding="latin-1").readlines():
-  Lines2.append(line)
-if(Lines == Lines2):
-  print("Ok")
+val = are_files_equal(sys.argv[1], "descomprimido_elmejorprofesor.txt")
+
+if val:
+    print('ok')
 else:
-  print("Nok")
+    print('nok')
